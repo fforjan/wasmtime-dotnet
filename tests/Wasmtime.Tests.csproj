@@ -1,8 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
+<PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">    
+    <TargetFrameworks >net8.0;net472</TargetFrameworks>  
+  </PropertyGroup>
+  <PropertyGroup Condition="!($([MSBuild]::IsOSPlatform('Windows')))">    
+    <TargetFrameworks >net8.0;net472</TargetFrameworks>  
+  </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net472</TargetFrameworks>
-    <LangVersion>Latest</LangVersion>
+        <LangVersion>Latest</LangVersion>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
