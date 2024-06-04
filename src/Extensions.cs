@@ -39,6 +39,7 @@ namespace Wasmtime
             fixed (char* charsPtr = chars)
             fixed (byte* bytesPtr = bytes)
             {
+                if(bytesPtr == null) return 0;
                 return encoding.GetBytes(charsPtr, chars.Length, bytesPtr, bytes.Length);
             }
         }
@@ -49,6 +50,7 @@ namespace Wasmtime
             fixed (char* charsPtr = chars)
             fixed (byte* bytesPtr = bytes)
             {
+                if(bytesPtr == null) return 0;
                 return encoding.GetBytes(charsPtr, chars.Length, bytesPtr, bytes.Length);
             }
         }
@@ -59,6 +61,7 @@ namespace Wasmtime
             fixed (char* charsPtr = chars)
             fixed (byte* bytesPtr = bytes)
             {
+                if(bytesPtr == null) return 0;
                 return encoding.GetBytes(charsPtr, chars.Length, bytesPtr, bytes.Length);
             }
         }
