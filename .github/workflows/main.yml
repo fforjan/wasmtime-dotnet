@@ -17,26 +17,40 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        build: [linux-debug, linux-release, macos-debug, macos-release, windows-debug, windows-release]
+        build: [linux-debug, linux-release, macos-debug, macos-release, windows-debug, windows-release, windows-debug-net472, windows-release-debug-net472]
         include:
           - build: linux-debug
             os: ubuntu-latest
             config: debug
+            framework: net8.0
           - build: linux-release
             os: ubuntu-latest
             config: release
+            framework: net8.0
           - build: macos-debug
             os: macos-latest
             config: debug
+            framework: net8.0
           - build: macos-release
             os: macos-latest
             config: release
+            framework: net8.0
           - build: windows-debug
             os: windows-2019
             config: debug
+            framework: net8.0
           - build: windows-release
             os: windows-2019
             config: release
+            framework: net8.0
+          - build: windows-debug-net472
+            os: windows-2019
+            config: debug
+            framework: net472
+          - build: windows-release-net472
+            os: windows-2019
+            config: release
+            framework: net472
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-dotnet@v1
@@ -53,12 +67,12 @@ jobs:
     - name: Restore packages
       run: dotnet restore Wasmtime.sln
     - name: Build
-      run: dotnet build Wasmtime.sln -c ${{ matrix.config }} --no-restore
+      run: dotnet build Wasmtime.sln -c ${{ matrix.config }} -f ${{ matrix.framework }} --no-restore
     - name: Test
-      run: dotnet test Wasmtime.sln -c ${{ matrix.config }}
+      run: dotnet test Wasmtime.sln -c ${{ matrix.config }} -f ${{ matrix.framework }}
     - name: Benchmark
       if: matrix.config == 'release'
-      run: dotnet run -c ${{ matrix.config }} --project benchmarks/simple/simple.csproj
+      run: dotnet run -c ${{ matrix.config }} -f ${{ matrix.framework }} --project benchmarks/simple/simple.csproj
     - name: Run examples
       shell: bash
       env:
